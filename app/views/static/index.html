@@ -1,0 +1,36 @@
+<ul id="wall-dots"></ul>
+<ul id="containers">
+    <li id="container" class="page"> container 1</li>
+    <li id="container2" class="page"> container 2</li>
+</ul>
+
+<script>
+    var newContent = '';
+    var $widgetContent = '';
+    var $widgets ='';
+    var $container = $('#container');
+
+    function PutWallDots(){
+        var pages=2;
+        for(i=0;i<pages;i++){
+            $('<li>.</li>').appendTo('#wall-dots');
+        }
+        $('#wall-dots li:first').addClass('active');
+    }
+    function ChangePage(){
+        var num=$(this).index();
+        var pos=15-(num*70);
+        var check1=Math.ceil(parseFloat($("#containers").css('left')));
+        var check2=Math.ceil(pos/100*parseFloat($("#containers").parent().css('width')));
+        if(check1!==check2){
+            $('#containers').css({left:String(pos)+'%'});
+            $('#wall-dots li').removeClass('active');
+            $('#wall-dots li:eq('+num+')').addClass('active');
+            return false;
+        }
+    }
+    $(function(){
+        PutWallDots();       
+        $('#containers li.page, #wall-dots li').click(ChangePage);
+    });
+</script>
